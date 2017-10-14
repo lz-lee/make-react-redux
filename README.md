@@ -87,4 +87,8 @@
 
 * mapDispatchToProps
 
-  * 接受dispatch为参数，返回一个对象，为高阶组件提供reducer函数，触发action
+  * 接受dispatch为参数，返回一个对象，为高阶组件提供dispatch函数，触发action
+
+* Provider
+
+  * 用props.store初始化context，容器类组件，将context从index组件剥离

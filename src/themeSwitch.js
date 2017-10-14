@@ -27,13 +27,13 @@ class ThemeSwitch extends Component {
   }
 }
 
-mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     themeColor: state.themeColor
   }
 }
 
-mapDiapatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onSwitchColor: (color) => {
       dispatch({
@@ -44,5 +44,5 @@ mapDiapatchToProps = (dispatch) => {
   }
 }
 
-ThemeSwitch = connect(mapStateToProps, mapDiapatchToProps)(ThemeSwitch)
+ThemeSwitch = connect(mapStateToProps, mapDispatchToProps)(ThemeSwitch)
 export default ThemeSwitch

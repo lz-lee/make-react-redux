@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import propTypes from 'prop-types'
+import {Provider} from './myConnect'
 import Header from './header'
 import Content from './content'
 import './index.css'
@@ -39,13 +39,6 @@ const themeReducer = (state, action) => {
 const store = createStore(themeReducer)
 
 class Index extends Component {
-  static childContextTypes = {
-    store: propTypes.object
-  }
-
-  getChildContext() {
-    return { store }
-  }
   render () {
     return (
       <div>
@@ -57,6 +50,8 @@ class Index extends Component {
 }
 
 ReactDOM.render(
-  <Index />,
+  <Provider store={store}>
+    <Index />
+  </Provider>,
   document.getElementById('root')
 )

@@ -43,3 +43,26 @@ export const connect = (mapStateToProps, mapDispatchToProps) => (wrapperComponen
   }
   return Connect
 }
+
+// 用props.store初始化context，容器类组件
+export class Provider extends Component {
+  static propTypes = {
+    store: propTypes.object,
+    children: propTypes.any
+  }
+
+  static childContextTypes = {
+    store: propTypes.object
+  }
+
+  getChildContext() {
+    return {
+      store: this.props.store
+    }
+  }
+  render() {
+    return (
+      <div>{this.props.children}</div>
+    )
+  }
+}
