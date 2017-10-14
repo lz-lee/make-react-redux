@@ -83,4 +83,8 @@
 
 * mapStateToProps
 
-  * 接受state为参数，为高阶组件提供该组件所需要的数据
+  * 接受state为参数，返回一个对象，为高阶组件提供该组件所需要的数据
+
+* mapDispatchToProps
+
+  * 接受dispatch为参数，返回一个对象，为高阶组件提供reducer函数，触发action

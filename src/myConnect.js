@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import propTypes from 'prop-types'
 
-export const connect = (mapStateToProps) => (wrapperComponent) => {
+export const connect = (mapStateToProps, mapDispatchToProps) => (wrapperComponent) => {
   class Connect extends Component {
     static contextTypes = {
       store: propTypes.object
@@ -23,11 +23,16 @@ export const connect = (mapStateToProps) => (wrapperComponent) => {
     _updateProps = () => {
       const {store} = this.context
       // mapStateToProps 函数，为高阶组件提供该组件所需要的数据
-      let stateProps = mapStateToProps(store.getState(), this.props) // 额外传入的props
+      let stateProps = mapStateToProps ? mapStateToProps(store.getState(), this.props) : {}// 额外传入的props
+
+      // mapDispatchToProps 函数，为高阶组件提供reducer函数，触发action
+      let dispatchProps = mapDispatchToProps ? mapDispatchToProps(store.dispatch, this.props) : {}
+
       this.setState({
         // 整合props
         allProps: {
           ...stateProps,
+          ...dispatchProps,
           ...this.props
         }
       })
