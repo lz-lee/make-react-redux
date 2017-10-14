@@ -42,4 +42,45 @@
 }
  ```
 
+## connect
 
+* context
+
+  * 组件的context只有它的子组件能够访问，父组件不能访问
+
+  * 父组件设置context
+
+    ```
+    ...
+
+    // 验证getChildContext 返回的对象， 必须要写
+    static childContextTypes = {
+      name: propTypes.string
+    }
+
+    // 设置context的方法，返回的对象是context
+    getChildContext() {
+      return {name: this.state.name}
+    }
+
+    ...
+    ```
+  * 子组件 获取context
+
+    ```
+    ...
+    // 验证此组件需要获取的状态的类型，必须写才能获取context里的状态
+    static contextTypes = {
+      name: propTypes.string
+    }
+
+    // 通过this.context 获取
+    return (
+      const name = this.context.name
+      <h2>{name}</h2>  
+    )
+    ```
+
+* mapStateToProps
+
+  * 接受state为参数，为高阶组件提供该组件所需要的数据
