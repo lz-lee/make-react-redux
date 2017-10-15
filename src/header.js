@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import {connect} from './myConnect' 
+import {connect} from 'react-redux'
 
 class Header extends Component {
   static propTypes = {

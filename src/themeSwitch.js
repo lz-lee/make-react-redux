@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {connect} from './myConnect'
+import {connect} from 'react-redux'
 import propTypes from 'prop-types'
 
 class ThemeSwitch extends Component {
@@ -14,12 +14,13 @@ class ThemeSwitch extends Component {
     }
   }
   render () {
+    console.log(this.props)
     return (
       <div>
-        <button style={{color: this.state.themeColor}}
+        <button style={{color: this.props.themeColor}}
           onClick={this.handleChangeColor('red')}
         >Red</button>
-        <button style={{color: this.state.themeColor}}
+        <button style={{color: this.props.themeColor}}
         onClick={this.handleChangeColor('blue')}
         >Blue</button>
       </div>
