@@ -3,12 +3,15 @@ import {connect} from 'react-redux'
 import propTypes from 'prop-types'
 
 class ThemeSwitch extends Component {
+  constructor(props) {
+    super(props)
+  }
   static contextTypes = {
     themeColor: propTypes.string,
     onSwitchColor: propTypes.func
   }
 
-  handleChangeColor = (color) => {
+  handleChangeColor(color) {
     if (this.props.onSwitchColor) {
       this.props.onSwitchColor(color)
     }
@@ -18,11 +21,14 @@ class ThemeSwitch extends Component {
     return (
       <div>
         <button style={{color: this.props.themeColor}}
-          onClick={this.handleChangeColor('red')}
+          onClick={() => this.handleChangeColor('red')}
         >Red</button>
         <button style={{color: this.props.themeColor}}
-        onClick={this.handleChangeColor('blue')}
+        onClick={() => this.handleChangeColor('blue')}
         >Blue</button>
+        <button style={{color: this.props.themeColor}}
+        onClick={() => this.handleChangeColor('green')}
+        >等2s</button>
       </div>
     )
   }
@@ -45,5 +51,15 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-ThemeSwitch = connect(mapStateToProps, mapDispatchToProps)(ThemeSwitch)
+const changeAsync = (color) => {
+  return dispatch => {
+    setTimeout(() => {
+      dispatch({
+        type: 'CHANGE_COLOR',
+        themeColor: color
+      })
+    }, 2000)
+  }
+}
+ThemeSwitch = connect(mapStateToProps, {changeAsync, ...mapDispatchToProps})(ThemeSwitch)
 export default ThemeSwitch

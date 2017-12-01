@@ -25,7 +25,7 @@ export const connect = (mapStateToProps, mapDispatchToProps) => (wrapperComponen
       // mapStateToProps 函数，为高阶组件提供该组件所需要的数据
       let stateProps = mapStateToProps ? mapStateToProps(store.getState(), this.props) : {}// 额外传入的props
 
-      // mapDispatchToProps 函数，为高阶组件提供reducer函数，触发action
+      // mapDispatchToProps 函数，为高阶组件提供reducer函数，触发action, 最终结果是，{key: (...args) => dispatch(creator(...args))} 
       let dispatchProps = mapDispatchToProps ? mapDispatchToProps(store.dispatch, this.props) : {}
 
       this.setState({

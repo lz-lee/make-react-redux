@@ -4,7 +4,7 @@ import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import Header from './header'
 import Content from './content'
-
+import {applyMiddleware, thunk} from './myRedux'
 // function createStore(reducer) {
 //   let state = null
 //   const listeners = []
@@ -22,11 +22,11 @@ import Content from './content'
 //   return { subscribe, getState, dispatch }
 // }
 
-const themeReducer = (state, action) => {
-  if (!state) return {
-    themeColor: 'red'
-  }
+const initState = {
+  themeColor: 'red'
+}
 
+const themeReducer = (state = initState, action) => {
   switch (action.type) {
     case 'CHANGE_COLOR':
       return {...state, themeColor: action.themeColor}
@@ -36,7 +36,8 @@ const themeReducer = (state, action) => {
   }
 }
 
-const store = createStore(themeReducer)
+
+const store = createStore(themeReducer, applyMiddleware(thunk))
 
 class Index extends Component {
   render () {
