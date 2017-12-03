@@ -1,25 +1,22 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import {connect} from 'react-redux'
+import {connect} from './myConnect'
 
 class Header extends Component {
-  static propTypes = {
-    themeColor: propTypes.string
-  }
-
   render () {
+    console.log(this.props)
     return (
       <h1 style={{color: this.props.themeColor}}>React.js 小书</h1>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    themeColor: state.themeColor
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     themeColor: state.themeColor
+//   }
+// }
 
-Header = connect(mapStateToProps)(Header)
+Header = connect(state => ({themeColor: state.themeColor}))(Header)
 
 export default Header

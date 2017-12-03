@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import {connect} from 'react-redux'
+import {connect} from './myConnect'
 import ThemeSwitch from './themeSwitch'
 
 class Content extends Component {
-  static propTypes = {
-    themeColor: propTypes.string
-  }
   render () {
     return (
       <div>
@@ -17,12 +14,6 @@ class Content extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    themeColor: state.themeColor
-  }
-}
-
-Content = connect(mapStateToProps)(Content)
+Content = connect(state => ({themeColor: state.themeColor}))(Content)
 
 export default Content

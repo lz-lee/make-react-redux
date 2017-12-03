@@ -1,10 +1,10 @@
-function createStore(reducer, enhancer) {
+export function createStore(reducer, enhancer) {
   // applyMiddleware
   if (enhancer) {
     return enhancer(createStore)(reducer)
   }
 
-  let state = null
+  let state = {}
 
   let listeners = []
 
@@ -27,7 +27,7 @@ function createStore(reducer, enhancer) {
   }
 
   // 初始化 state
-  dispatch({})
+  dispatch({type: '@@!!'})
   return {getState, subscribe, dispatch}
 }
 
@@ -44,8 +44,8 @@ function createStore(reducer, enhancer) {
  * 
  * @return {actionName: (...args) => dispatch(creator(...args))}
  */
-function bindActionCreators(creators, dispatch) {
-  let bound = {}
+export function bindActionCreators(creators, dispatch) {
+  // let bound = {}
   // Object.keys(creators).forEach(v => {
   //   bound[v] = bindActionCreator(creators[v], dispatch)
   // })
@@ -82,8 +82,11 @@ export function applyMiddleware(middleware) {
 }
 
 export const thunk = ({dispatch, getState}) => (next) => (action) => {
+  console.log(action, typeof action)
+  // 如果是函数，则执行函数，参数是dispatch 和getState
   if (typeof action === 'function') {
     return action(dispatch, getState)
   }
+  // 默认使用原来的dispatch
   return next(action)
 }

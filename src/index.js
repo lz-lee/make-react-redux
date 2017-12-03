@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import {createStore} from 'redux'
-import {Provider} from 'react-redux'
+// import {createStore} from 'redux'
+import {Provider, connect} from './myConnect'
 import Header from './header'
 import Content from './content'
-import {applyMiddleware, thunk} from './myRedux'
+import {applyMiddleware, thunk, createStore} from './myRedux'
+import {themeReducer} from './reducer'
 // function createStore(reducer) {
 //   let state = null
 //   const listeners = []
@@ -22,21 +23,6 @@ import {applyMiddleware, thunk} from './myRedux'
 //   return { subscribe, getState, dispatch }
 // }
 
-const initState = {
-  themeColor: 'red'
-}
-
-const themeReducer = (state = initState, action) => {
-  switch (action.type) {
-    case 'CHANGE_COLOR':
-      return {...state, themeColor: action.themeColor}
-  
-    default:
-      return state
-  }
-}
-
-
 const store = createStore(themeReducer, applyMiddleware(thunk))
 
 class Index extends Component {
@@ -49,6 +35,7 @@ class Index extends Component {
     )
   }
 }
+// Index = connect()(Index)
 
 ReactDOM.render(
   <Provider store={store}>
