@@ -28,3 +28,7 @@ export const changeAsync = (color) => {
     }, 2000)
   }
 }
+
+export const changeTwice = () => {
+  return [changeColor('yellow'), changeAsync('#f0f')]
+}

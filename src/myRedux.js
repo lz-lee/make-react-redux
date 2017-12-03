@@ -63,7 +63,7 @@ const bindActionCreator = (creator, dispatch) => {
  * applyMiddleware
  */
 
-export function applyMiddleware(middleware) {
+export function applyMiddleware(...middlewares) {
   return (createStore) => (...args) => {
     const store = createStore(...args)
     let dispatch = createStore.dispatch
@@ -72,8 +72,10 @@ export function applyMiddleware(middleware) {
       getState: store.getState,
       dispatch: (...args) => dispatch(...args)
     }
-    dispatch = middleware(midApi)(store.dispatch)
-
+    // 单个中间件
+    // dispatch = middleware(midApi)(store.dispatch)
+    const middlewareChain = middlewares.map(middleware => middleware(midApi))
+    dispatch = compose(...middlewareChain)(store.dispatch)
     return {
       ...store,
       dispatch
@@ -87,6 +89,35 @@ export const thunk = ({dispatch, getState}) => (next) => (action) => {
   if (typeof action === 'function') {
     return action(dispatch, getState)
   }
+  // 默认使用原来的dispatch
+  return next(action)
+}
+
+/**
+ * 
+ * @param {fn1, fn2, fn3,...} middlewareChain 
+ * fn1(fn2(fn3))
+ */
+export const compose = (...middlewareChain) => {
+  if (middlewareChain.length === 0) {
+    return arg => arg
+  }
+  if (middlewareChain.length === 1) {
+    return middlewareChain[0]
+  }
+  
+  return middlewareChain.reduce((ret, item) => (...args) => ret(item(...args)))
+}
+
+export const arrThunk = ({dispatch, getState}) => (next) => (action) => {
+  console.log(action, typeof action)
+  if (Array.isArray(action)) {
+    action.forEach(v => dispatch(v))
+  }
+  // 如果是函数，则执行函数，参数是dispatch 和getState
+  // if (typeof action === 'function') {
+  //   return action(dispatch, getState)
+  // }
   // 默认使用原来的dispatch
   return next(action)
 }

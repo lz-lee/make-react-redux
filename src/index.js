@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import {Provider, connect} from './myConnect'
 import Header from './header'
 import Content from './content'
-import {applyMiddleware, thunk, createStore} from './myRedux'
+import {applyMiddleware, thunk, createStore, arrThunk} from './myRedux'
 import {themeReducer} from './reducer'
 // function createStore(reducer) {
 //   let state = null
@@ -23,7 +23,7 @@ import {themeReducer} from './reducer'
 //   return { subscribe, getState, dispatch }
 // }
 
-const store = createStore(themeReducer, applyMiddleware(thunk))
+const store = createStore(themeReducer, applyMiddleware(thunk, arrThunk))
 
 class Index extends Component {
   render () {

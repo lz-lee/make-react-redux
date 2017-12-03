@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from './myConnect'
-import {changeColor, changeAsync} from './reducer'
+import {changeColor, changeAsync, changeTwice} from './reducer'
 import propTypes from 'prop-types'
 
 
@@ -20,10 +20,13 @@ class ThemeSwitch extends Component {
         <button style={{color: this.props.themeColor}}
         onClick={() => this.props.changeAsync('green')}
         >等2s</button>
+        <button style={{color: this.props.themeColor}}
+        onClick={() => this.props.changeTwice()}
+        >改两次</button>
       </div>
     )
   }
 }
 
-ThemeSwitch = connect(state => ({themeColor: state.themeColor}), {changeColor, changeAsync})(ThemeSwitch)
+ThemeSwitch = connect(state => ({themeColor: state.themeColor}), {changeColor, changeAsync, changeTwice})(ThemeSwitch)
 export default ThemeSwitch
