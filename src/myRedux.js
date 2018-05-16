@@ -121,3 +121,37 @@ export const arrThunk = ({dispatch, getState}) => (next) => (action) => {
   // 默认使用原来的dispatch
   return next(action)
 }
+
+/**
+ * actions 生成器 可用于创建同步的action
+ * let addAction = createAction('ADD', 'count')
+ * addAction(1)
+ * 相当于 function addAction(id) {return {type: 'ADD', count: count}}
+ * @param {*} type 
+ * @param {*} argNames 
+ */
+export const createAction = (type, ...argNames) => (...args) => {
+  let action = {type}
+  argNames.forEach((v, i) => {
+    action[v] = args[i]
+  })
+  return action
+}
+
+/**
+ * reducer 生成器
+ * let userReducer = createReducer(initState, {
+ *    [actionTypes.ADD](state, action) {
+ *        // do something
+ *        return state
+ *    }
+ * })
+ * @param {*} initState 
+ * @param {*} handles 
+ */
+export const createReducer = (initState, handles = {}) => (state = initState, action = {}) => {
+  if (handles.hasOwnProperty(action.type)) {
+    return handles[action.type](state, action)
+  }
+  return state
+}
